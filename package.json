@@ -1,0 +1,23 @@
+{
+  "name": "mein-detail-browser",
+  "version": "1.0.0",
+  "description": "Ein. Detail Browser zum machen",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abbas495/mein-detail-Browser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Abbas495/mein-detail-Browser/issues"
+  },
+  "homepage": "https://github.com/Abbas495/mein-detail-Browser#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  }
+}
