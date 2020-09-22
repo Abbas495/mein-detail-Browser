@@ -1,5 +1,7 @@
+const { text } = require("express");
 const express = require("express");
 const fs = require("fs");
+const { get } = require("http");
 
 const app = express();
 //register vieew engine
@@ -39,4 +41,10 @@ app.get("/home", (req, res) => {
 //err
 app.use((req, res) => {
   res.status(404).render("404");
+});
+let myFileloader = function (ha) {
+  return "myfileloader: " + fs.readFileSync(text);
+};
+app.get("/ha", (req, res) => {
+  res.render("ha");
 });
