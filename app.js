@@ -1,36 +1,37 @@
-const { text } = require('express')
-const express = require('express')
-const fs = require('fs')
-const path = require('path')
-const { get } = require('http')
+const { text } = require("express");
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+const { get } = require("http");
 
-const app = express()
+const app = express();
 
-const startDirectory = __dirname
-
+const startDirectory = __dirname;
+const startDirectory2 = __filename;
 //register vieew engine
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs");
 
 //listen for requests,
-app.listen(3000)
+app.listen(3000);
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   fs.readdir(startDirectory, (err, files) => {
-    res.render('index', { dirs: files })
-  })
-})
+    res.render("index", { dirs: files });
+  });
+});
+app.use(express.static(startDirectory));
 
 app.use((req, res) => {
-  const newPath = path.join(startDirectory, req.path)
+  const newPath = path.join(startDirectory, req.path);
 
   fs.readdir(newPath, (err, files) => {
     if (err) {
-      res.status(404).render('404')
+      res.status(404).render("404");
     } else {
-      res.render('index', { dirs: files })
+      res.render("index", { dirs: files });
     }
-  })
-})
+  });
+});
 
 // app.get('/my-website', (req, res) => {
 //   res.render('my-website')
