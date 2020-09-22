@@ -22,7 +22,6 @@ app.get('/', (req, res) => {
 
 app.use((req, res) => {
   const newPath = path.join(startDirectory, req.path)
-  console.log(newPath)
 
   fs.readdir(newPath, (err, files) => {
     if (err) {
