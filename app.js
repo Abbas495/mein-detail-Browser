@@ -20,7 +20,9 @@ app.get("/", (req, res) => {
   });
 });
 app.use(express.static(startDirectory));
-
+/*app.get("viwes", function (req, res) {
+  res.status(200).send("User Page");
+});*/
 app.use((req, res) => {
   const newPath = path.join(startDirectory, req.path);
 
@@ -28,11 +30,16 @@ app.use((req, res) => {
     if (err) {
       res.status(404).render("404");
     } else {
+      /*  files.forEach(function (file) {
+        fs.stat(startDirectory + `startDirectory`, function (err, stats) {
+          console.log(stats);*/
+
       res.render("index", { dirs: files });
+      //        });
+      //   });
     }
   });
 });
-
 // app.get('/my-website', (req, res) => {
 //   res.render('my-website')
 // })
