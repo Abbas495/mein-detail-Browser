@@ -1,45 +1,95 @@
-const { text } = require("express");
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const { get } = require("http");
+const { text } = require('express')
+const express = require('express')
+const fs = require('fs')
+const path = require('path')
+const { get } = require('http')
 
-const app = express();
+const app = express()
 
-const startDirectory = __dirname;
-const startDirectory2 = __filename;
+const startDirectory = __dirname
+
+/**
+ * Render given files as directory HTML page.
+ */
+const renderDirectory = (res, path, files) => {
+  res.render('index', {
+    parentDir: path,
+    dirs: files,
+    content: '',
+  })
+}
+
+/**
+ * Read content of given file path and render as HTML page.
+ */
+const renderFile = (res, path, content) => {
+  fs.readFile(path, 'utf8', (err, data) => {
+    if (err) {
+      return showError(res, path, err.toString())
+    }
+    res.render('file', {
+      currentDir: path,
+      content: data,
+    })
+  })
+}
+
+/**
+ * Render given error code as HTML page.
+ */
+const showError = (res, path, error) => {
+  res.status(404).render('404', { currentDir: path, error: error || '' })
+}
+
+// const startDirectory2 = __filename
 //register vieew engine
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs')
 
 //listen for requests,
-app.listen(3000);
+app.listen(3000)
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   fs.readdir(startDirectory, (err, files) => {
-    res.render("index", { dirs: files });
-  });
-});
-app.use(express.static(startDirectory));
+    if (err) {
+      showError(res, startDirectory, err.toString())
+    } else {
+      renderDirectory(res, '', files)
+    }
+  })
+})
+
+// app.use(express.static(startDirectory));
 /*app.get("viwes", function (req, res) {
   res.status(200).send("User Page");
 });*/
+
 app.use((req, res) => {
-  const newPath = path.join(startDirectory, req.path);
+  const newPath = path.join(startDirectory, req.path.replace(/\$SL/g, '/'))
+  const parent = path.relative(__dirname, newPath)
 
-  fs.readdir(newPath, (err, files) => {
+  fs.stat(newPath, (err, stats) => {
     if (err) {
-      res.status(404).render("404");
+      showError(res, newPath, err.toString())
     } else {
-      /*  files.forEach(function (file) {
-        fs.stat(startDirectory + `startDirectory`, function (err, stats) {
-          console.log(stats);*/
+      // TODO: use stats
+      // console.log(stats)
 
-      res.render("index", { dirs: files });
-      //        });
-      //   });
+      if (stats.isDirectory()) {
+        fs.readdir(newPath, (err, files) => {
+          if (err) {
+            showError(res, newPath, err.toString())
+          } else {
+            renderDirectory(res, parent, files)
+          }
+        })
+      } else if (stats.isFile()) {
+        renderFile(res, newPath)
+      } else {
+        showError(res, newPath, err.toString())
+      }
     }
-  });
-});
+  })
+})
 // app.get('/my-website', (req, res) => {
 //   res.render('my-website')
 // })
