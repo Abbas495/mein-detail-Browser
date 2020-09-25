@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Abbas495/mein-detail-Browser#readme",
   "dependencies": {
     "ejs": "^3.1.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "moment": "^2.29.0"
   }
 }

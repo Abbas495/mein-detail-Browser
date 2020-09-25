@@ -5,7 +5,19 @@
     <h1>Welome to my Detail</h1>
     <nav>
       <div class="first">
-        <h2><a href="/"><%= currentDir %></a></h2>
+        <!--7tina al mt7wl hon l7ta jtl3o al m3lomat 3ndi-->
+        <h2>
+          <a href="/"><%= currentDir %> </a>
+        </h2>
+
+        <h4>Metadata:</h4>
+        <br />
+        <ul>
+          <li>Created at: <%= stats.createdAt %></li>
+          <li>Size : <%= stats.sizeAt %></li>
+        </ul>
+
+        <br />
         <code> <%= content %> </code>
       </div>
     </nav>

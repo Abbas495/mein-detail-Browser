@@ -5,12 +5,18 @@
     <h1>Welome to my Detail</h1>
     <nav>
       <div class="first">
-        <h2><a href="/"><%= parentDir %></a></h2>
+        <h2>
+          <a href="/"
+            ><%= parentDir %>
+            <li>( <%= stats.nummbier %> )</li>
+            <li>Created at: <%= stats.createdAt %></li></a
+          >
+        </h2>
         <ul>
-          <% dirs.forEach(function(directory){ %>
+          <% dirs.forEach(function(item){ %>
           <li>
             <a
-              href="<%= './' + parentDir.replace(/\/\\/g, '$SL') + '$SL' + directory %>"
+              href="<%= './' + parentDir.replace(/\/\\/g, '$SL') + '$SL' + item.name %>"
               ><button>
                 <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
                   <path
@@ -18,7 +24,9 @@
                     d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"
                   />
                 </svg>
-                <h5><%= directory %></h5>
+                <!--alm3lwmat yli 7tita litl3 al r2m-->
+
+                <h5><%= item.name %>( <%= item.entries %> )</h5>
               </button></a
             >
           </li>
